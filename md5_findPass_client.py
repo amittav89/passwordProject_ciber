@@ -1,5 +1,6 @@
 import itertools
 import hashlib
+import socket
 
 
 def create_pass(size_pass):
@@ -26,5 +27,15 @@ def decode_md5(hashed_password, size_pass, start_letter, end_letter):
     return None
 
 
+def get_hashcode():
+    sock = socket.socket()
+    sock.connect(("127.0.0.1", 5000))
+    recv_message = sock.recv(1024)
+    print("Received new message: {}".format(recv_message.decode()))  # Decode received data
+    sock.close()
+    return recv_message
+
+
 if __name__ == "__main__":
-    decode_md5(hashed_password="0cb1eb413b8f7cee17701a37a1d74dc3", size_pass=4, start_letter='a', end_letter='t')
+    received_message = get_hashcode().decode()  # Remove leading/trailing whitespace
+    decode_md5(hashed_password=received_message, size_pass=4, start_letter='a', end_letter='t')
