@@ -19,7 +19,7 @@ def decode_md5(hashed_password, size_pass, start_letter, end_letter):
     for password_tuple in possible_passwords:
         if (password_tuple[0] == start_letter) and (password_tuple[size_pass - 1] == end_letter):
             password = "".join(password_tuple)
-            print("Trying: {}".format(password))
+            # print("Trying: {}".format(password))
             if calculate_md5(password) == hashed_password:
                 print("The password is: {}".format(password))
                 return password
@@ -29,7 +29,7 @@ def decode_md5(hashed_password, size_pass, start_letter, end_letter):
 
 def get_hashcode():
     sock = socket.socket()
-    sock.connect(("127.0.0.1", 5000))
+    sock.connect(("127.0.0.1", 8888))
     recv_message = sock.recv(1024)
     print("Received new message: {}".format(recv_message.decode()))  # Decode received data
     sock.close()
@@ -38,4 +38,5 @@ def get_hashcode():
 
 if __name__ == "__main__":
     received_message = get_hashcode().decode()  # Remove leading/trailing whitespace
-    decode_md5(hashed_password=received_message, size_pass=4, start_letter='a', end_letter='t')
+    # start pass &&  end  ==>len
+    decode_md5(hashed_password=received_message,size_pass=8, start_letter='t', end_letter='i')
